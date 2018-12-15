@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="FactoryMethod.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

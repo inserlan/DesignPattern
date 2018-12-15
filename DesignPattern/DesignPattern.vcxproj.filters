@@ -18,6 +18,12 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FactoryMethod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
