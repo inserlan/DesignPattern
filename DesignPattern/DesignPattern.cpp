@@ -5,6 +5,7 @@
 #include <iostream>
 #include "FactoryMethod.h"
 #include "AbstractFactory.h"
+#include "Singleton.h"
 
 int main()
 {
@@ -16,5 +17,10 @@ int main()
 	// 抽象工厂
 	std::cout << "Design Pattern 2: Abstract Factory =>>" << std::endl;
 	AbstractFactoryAfter();
+	std::cout << std::endl;
+
+	// 抽象工厂
+	std::cout << "Design Pattern 3: Singleton =>>" << std::endl;
+	SingletonAfter();
 	std::cout << std::endl;
 }

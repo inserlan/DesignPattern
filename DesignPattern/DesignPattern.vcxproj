@@ -154,6 +154,7 @@
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="FactoryMethod.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Singleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DesignPattern.cpp" />
