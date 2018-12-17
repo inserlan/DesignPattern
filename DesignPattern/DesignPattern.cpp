@@ -6,6 +6,7 @@
 #include "FactoryMethod.h"
 #include "AbstractFactory.h"
 #include "Singleton.h"
+#include "Builder.h"
 
 int main()
 {
@@ -19,8 +20,13 @@ int main()
 	AbstractFactoryAfter();
 	std::cout << std::endl;
 
-	// 抽象工厂
+	// 单件
 	std::cout << "Design Pattern 3: Singleton =>>" << std::endl;
 	SingletonAfter();
+	std::cout << std::endl;
+
+	// 建造者
+	std::cout << "Design Pattern 4: Builder =>>" << std::endl;
+	BuliderExample();
 	std::cout << std::endl;
 }
