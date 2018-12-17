@@ -7,6 +7,7 @@
 #include "AbstractFactory.h"
 #include "Singleton.h"
 #include "Builder.h"
+#include "Prototype.h"
 
 int main()
 {
@@ -28,5 +29,10 @@ int main()
 	// 建造者
 	std::cout << "Design Pattern 4: Builder =>>" << std::endl;
 	BuliderExample();
+	std::cout << std::endl;
+
+	// 原型
+	std::cout << "Design Pattern 5: Prototype =>>" << std::endl;
+	PrototypeExample();
 	std::cout << std::endl;
 }

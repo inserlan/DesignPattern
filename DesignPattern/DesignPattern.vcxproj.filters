@@ -30,6 +30,9 @@
     <ClInclude Include="Builder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Prototype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
