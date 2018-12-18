@@ -23,183 +23,186 @@
 //然后我们创建一个 Meal 类，带有 Item 的 ArrayList 和一个通过结合 Item 来创建不同类型的 Meal 对象的 MealBuilder。
 //BuilderPatternDemo，我们的演示类使用 MealBuilder 来创建一个 Meal。
 
-// 包装抽象基类
-class Packing
+namespace DP_Builder
 {
-public:
-	virtual std::string pack() = 0;
-};
-
-// 具体包装1，纸盒
-class Warpper : public Packing
-{
-public:
-	std::string pack() override
+	// 包装抽象基类
+	class Packing
 	{
-		return "Warpper";
-	}
-};
+	public:
+		virtual std::string pack() = 0;
+	};
 
-// 具体包装2，瓶子
-class Bottle : public Packing
-{
-public:
-	std::string pack() override
+	// 具体包装1，纸盒
+	class Warpper : public Packing
 	{
-		return "Bottle";
-	}
-};
-
-// 食物条目抽象基类
-class Item
-{
-public:
-	virtual std::string name() = 0;
-	virtual Packing* packing() = 0;
-	virtual float price() = 0;
-};
-
-// 具体食物条目1，汉堡
-class Burger : public Item
-{
-public:
-	Packing* packing() override
-	{
-		return new Warpper;
-	}
-};
-
-// 具体食物条目2，冷饮
-class ColdDrink : public Item
-{
-public:
-	Packing* packing() override
-	{
-		return new Bottle;
-	}
-};
-
-// 具体汉堡1
-class VegBurger : public Burger
-{
-public:
-	std::string name() override
-	{
-		return "Veg Burger";
-	}
-
-	float price() override
-	{
-		return 25.0f;
-	}
-};
-
-// 具体汉堡2
-class ChickenBurger : public Burger
-{
-public:
-	std::string name() override
-	{
-		return "Chicken Burger";
-	}
-
-	float price() override
-	{
-		return 50.0f;
-	}
-};
-
-// 具体冷饮1
-class Coke : public ColdDrink
-{
-public:
-	std::string name() override
-	{
-		return "Coke";
-	}
-
-	float price() override
-	{
-		return 30.0f;
-	}
-};
-
-// 具体冷饮2
-class Pepsi : public ColdDrink
-{
-public:
-	std::string name() override
-	{
-		return "Pepsi";
-	}
-
-	float price() override
-	{
-		return 35.0f;
-	}
-};
-
-// 套餐类
-class Meal
-{
-private:
-	std::vector<Item*> m_vtItem;
-
-public:
-	void addItem(Item* it)
-	{
-		m_vtItem.push_back(it);
-	}
-
-	float cost()
-	{
-		float cost = 0.0f;
-		for (auto it : m_vtItem)
-			cost += it->price();
-		return cost;
-	}
-
-	void showItem()
-	{
-		for (auto it : m_vtItem)
+	public:
+		std::string pack() override
 		{
-			std::cout << "Item: " << it->name() << ", Packing: " << it->packing()->pack() << ", Price: " << it->price() << "\n";
+			return "Warpper";
 		}
-	}
-};
+	};
 
-// 建造者类
-class MealBuilder
-{
-public:
-	Meal* prepareVegMeal()
+	// 具体包装2，瓶子
+	class Bottle : public Packing
 	{
-		Meal* meal = new Meal;
-		meal->addItem(new VegBurger);
-		meal->addItem(new Coke);
-		return meal;
-	}
+	public:
+		std::string pack() override
+		{
+			return "Bottle";
+		}
+	};
 
-	Meal* prepareNonVegMeal()
+	// 食物条目抽象基类
+	class Item
 	{
-		Meal* meal = new Meal;
-		meal->addItem(new ChickenBurger);
-		meal->addItem(new Pepsi);
-		return meal;
+	public:
+		virtual std::string name() = 0;
+		virtual Packing* packing() = 0;
+		virtual float price() = 0;
+	};
+
+	// 具体食物条目1，汉堡
+	class Burger : public Item
+	{
+	public:
+		Packing* packing() override
+		{
+			return new Warpper;
+		}
+	};
+
+	// 具体食物条目2，冷饮
+	class ColdDrink : public Item
+	{
+	public:
+		Packing* packing() override
+		{
+			return new Bottle;
+		}
+	};
+
+	// 具体汉堡1
+	class VegBurger : public Burger
+	{
+	public:
+		std::string name() override
+		{
+			return "Veg Burger";
+		}
+
+		float price() override
+		{
+			return 25.0f;
+		}
+	};
+
+	// 具体汉堡2
+	class ChickenBurger : public Burger
+	{
+	public:
+		std::string name() override
+		{
+			return "Chicken Burger";
+		}
+
+		float price() override
+		{
+			return 50.0f;
+		}
+	};
+
+	// 具体冷饮1
+	class Coke : public ColdDrink
+	{
+	public:
+		std::string name() override
+		{
+			return "Coke";
+		}
+
+		float price() override
+		{
+			return 30.0f;
+		}
+	};
+
+	// 具体冷饮2
+	class Pepsi : public ColdDrink
+	{
+	public:
+		std::string name() override
+		{
+			return "Pepsi";
+		}
+
+		float price() override
+		{
+			return 35.0f;
+		}
+	};
+
+	// 套餐类
+	class Meal
+	{
+	private:
+		std::vector<Item*> m_vtItem;
+
+	public:
+		void addItem(Item* it)
+		{
+			m_vtItem.push_back(it);
+		}
+
+		float cost()
+		{
+			float cost = 0.0f;
+			for (auto it : m_vtItem)
+				cost += it->price();
+			return cost;
+		}
+
+		void showItem()
+		{
+			for (auto it : m_vtItem)
+			{
+				std::cout << "Item: " << it->name() << ", Packing: " << it->packing()->pack() << ", Price: " << it->price() << "\n";
+			}
+		}
+	};
+
+	// 建造者类
+	class MealBuilder
+	{
+	public:
+		Meal* prepareVegMeal()
+		{
+			Meal* meal = new Meal;
+			meal->addItem(new VegBurger);
+			meal->addItem(new Coke);
+			return meal;
+		}
+
+		Meal* prepareNonVegMeal()
+		{
+			Meal* meal = new Meal;
+			meal->addItem(new ChickenBurger);
+			meal->addItem(new Pepsi);
+			return meal;
+		}
+	};
+
+	void BuliderExample()
+	{
+		MealBuilder* bulider = new MealBuilder;
+
+		Meal* verMeal = bulider->prepareVegMeal();
+		std::cout << "Ver Meal" << "\n";
+		verMeal->showItem();
+		std::cout << "Total Price: " << verMeal->cost() << "\n";
+
+		Meal* nonVerMeal = bulider->prepareNonVegMeal();
+		std::cout << "Non-Ver Meal" << "\n";
+		nonVerMeal->showItem();
+		std::cout << "Total Price: " << nonVerMeal->cost() << "\n";
 	}
-};
-
-void BuliderExample()
-{
-	MealBuilder* bulider = new MealBuilder;
-
-	Meal* verMeal = bulider->prepareVegMeal();
-	std::cout << "Ver Meal" << "\n";
-	verMeal->showItem();
-	std::cout << "Total Price: " << verMeal->cost() << "\n";
-
-	Meal* nonVerMeal = bulider->prepareNonVegMeal();
-	std::cout << "Non-Ver Meal" << "\n";
-	nonVerMeal->showItem();
-	std::cout << "Total Price: " << nonVerMeal->cost() << "\n";
 }

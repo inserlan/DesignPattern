@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="Adapter.h" />
     <ClInclude Include="Builder.h" />
     <ClInclude Include="FactoryMethod.h" />
     <ClInclude Include="ObjectPool.h" />

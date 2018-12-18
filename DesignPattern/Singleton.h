@@ -17,84 +17,87 @@
 //	3、单例类必须给所有其他对象提供这一实例。
 //	instance() 方法中需要使用同步锁, 防止多线程同时进入造成 instance 被多次实例化。
 
-// before =========================================================
-class GlobalClassBefore
+namespace DP_Singleton
 {
-	int m_value;
-public:
-	GlobalClassBefore(int v = 0) { m_value = v; }
-	int get_value() { return m_value; }
-	void set_value(int v) { m_value = v; }
-};
-
-// default initialization
-GlobalClassBefore *global_ptr_before = nullptr;
-
-void foo_before()
-{
-	// initialization on first use
-	if (global_ptr_before == nullptr)
-		global_ptr_before = new GlobalClassBefore;
-	global_ptr_before->set_value(1);
-	std::cout << "foo: global_ptr is " << global_ptr_before->get_value() << '\n';
-}
-
-void bar_before()
-{
-	// initialization on first use
-	if (global_ptr_before == nullptr)
-		global_ptr_before = new GlobalClassBefore;
-	global_ptr_before->set_value(2);
-	std::cout << "bar: global_ptr is " << global_ptr_before->get_value() << '\n';
-}
-
-void SingleTonBefore()
-{
-	if (global_ptr_before == nullptr)
-		global_ptr_before = new GlobalClassBefore;
-	std::cout << "main: global_ptr is " << global_ptr_before->get_value() << '\n';
-	foo_before();
-	bar_before();
-}
-
-// after =========================================================
-class GlobalClassAfter
-{
-	int m_value;
-	static GlobalClassAfter* s_instance;
-	GlobalClassAfter(int v = 0) { m_value = v; }
-
-public:
-	int get_value() { return m_value; }
-	void set_value(int v) { m_value = v; }
-	static GlobalClassAfter* instance()
+	// before =========================================================
+	class GlobalClassBefore
 	{
-		if (s_instance == nullptr)
-			s_instance = new GlobalClassAfter;
-		return s_instance;
+		int m_value;
+	public:
+		GlobalClassBefore(int v = 0) { m_value = v; }
+		int get_value() { return m_value; }
+		void set_value(int v) { m_value = v; }
+	};
+
+	// default initialization
+	GlobalClassBefore *global_ptr_before = nullptr;
+
+	void foo_before()
+	{
+		// initialization on first use
+		if (global_ptr_before == nullptr)
+			global_ptr_before = new GlobalClassBefore;
+		global_ptr_before->set_value(1);
+		std::cout << "foo: global_ptr is " << global_ptr_before->get_value() << '\n';
 	}
-};
 
-// Allocating and initializing GlobalClass's
-// static data member.  The pointer is being
-// allocated - not the object inself.
-GlobalClassAfter* GlobalClassAfter::s_instance = nullptr;
+	void bar_before()
+	{
+		// initialization on first use
+		if (global_ptr_before == nullptr)
+			global_ptr_before = new GlobalClassBefore;
+		global_ptr_before->set_value(2);
+		std::cout << "bar: global_ptr is " << global_ptr_before->get_value() << '\n';
+	}
 
-void foo_after()
-{
-	GlobalClassAfter::instance()->set_value(1);
-	std::cout << "foo: global_ptr is " << GlobalClassAfter::instance()->get_value() << '\n';
-}
+	void SingleTonBefore()
+	{
+		if (global_ptr_before == nullptr)
+			global_ptr_before = new GlobalClassBefore;
+		std::cout << "main: global_ptr is " << global_ptr_before->get_value() << '\n';
+		foo_before();
+		bar_before();
+	}
 
-void bar_after()
-{
-	GlobalClassAfter::instance()->set_value(2);
-	std::cout << "bar: global_ptr is " << GlobalClassAfter::instance()->get_value() << '\n';
-}
+	// after =========================================================
+	class GlobalClassAfter
+	{
+		int m_value;
+		static GlobalClassAfter* s_instance;
+		GlobalClassAfter(int v = 0) { m_value = v; }
 
-void SingletonAfter()
-{
-	std::cout << "main: global_ptr is " << GlobalClassAfter::instance()->get_value() << '\n';
-	foo_after();
-	bar_after();
+	public:
+		int get_value() { return m_value; }
+		void set_value(int v) { m_value = v; }
+		static GlobalClassAfter* instance()
+		{
+			if (s_instance == nullptr)
+				s_instance = new GlobalClassAfter;
+			return s_instance;
+		}
+	};
+
+	// Allocating and initializing GlobalClass's
+	// static data member.  The pointer is being
+	// allocated - not the object inself.
+	GlobalClassAfter* GlobalClassAfter::s_instance = nullptr;
+
+	void foo_after()
+	{
+		GlobalClassAfter::instance()->set_value(1);
+		std::cout << "foo: global_ptr is " << GlobalClassAfter::instance()->get_value() << '\n';
+	}
+
+	void bar_after()
+	{
+		GlobalClassAfter::instance()->set_value(2);
+		std::cout << "bar: global_ptr is " << GlobalClassAfter::instance()->get_value() << '\n';
+	}
+
+	void SingletonAfter()
+	{
+		std::cout << "main: global_ptr is " << GlobalClassAfter::instance()->get_value() << '\n';
+		foo_after();
+		bar_after();
+	}
 }

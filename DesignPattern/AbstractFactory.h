@@ -18,191 +18,194 @@
 // 缺点：产品族扩展非常困难，要增加一个系列的某一产品，既要在抽象的 Creator 里加代码，又要在具体的里面加代码。
 // 注意事项：产品族难扩展，产品等级易扩展。
 
-// Abstract base product
-class Widget
+namespace DP_AbsFac
 {
-public:
-	virtual void draw() = 0;
-};
+	// Abstract base product
+	class Widget
+	{
+	public:
+		virtual void draw() = 0;
+	};
 
-// Concrete product family 1
-class LinuxButton : public Widget
-{
-public:
-	void draw() override
+	// Concrete product family 1
+	class LinuxButton : public Widget
 	{
-		std::cout << "LinuxButton\n";
-	}
-};
-class LinuxMenu : public Widget
-{
-public:
-	void draw() override
+	public:
+		void draw() override
+		{
+			std::cout << "LinuxButton\n";
+		}
+	};
+	class LinuxMenu : public Widget
 	{
-		std::cout << "LinuxMenu\n";
-	}
-};
+	public:
+		void draw() override
+		{
+			std::cout << "LinuxMenu\n";
+		}
+	};
 
-// Concrete product family 2
-class WindowsButton : public Widget
-{
-public:
-	void draw() override
+	// Concrete product family 2
+	class WindowsButton : public Widget
 	{
-		std::cout << "WindowsButton\n";
-	}
-};
-class WindowsMenu : public Widget
-{
-public:
-	void draw() override
+	public:
+		void draw() override
+		{
+			std::cout << "WindowsButton\n";
+		}
+	};
+	class WindowsMenu : public Widget
 	{
-		std::cout << "WindowsMenu\n";
-	}
-};
+	public:
+		void draw() override
+		{
+			std::cout << "WindowsMenu\n";
+		}
+	};
 
-// before ==================================================
-/**
- * Here's a client, which uses concrete products directly.
- * It's code filled up with nasty switch statements
- * which check the product type before its use.
- */
-class ClientBefore
-{
-public:
-	void draw()
+	// before ==================================================
+	/**
+	 * Here's a client, which uses concrete products directly.
+	 * It's code filled up with nasty switch statements
+	 * which check the product type before its use.
+	 */
+	class ClientBefore
 	{
+	public:
+		void draw()
+		{
 #ifdef LINUX
-		Widget *w = new LinuxButton;
+			Widget *w = new LinuxButton;
 #else
-		Widget *w = new WindowsButton;
+			Widget *w = new WindowsButton;
 #endif // LINUX
-		w->draw();
-		display_window_one();
-		display_window_two();
-	}
+			w->draw();
+			display_window_one();
+			display_window_two();
+		}
 
-	void display_window_one()
-	{
+		void display_window_one()
+		{
 #ifdef LINUX
-		Widget *w[] = { new LinuxButton, new LinuxMenu };
+			Widget *w[] = { new LinuxButton, new LinuxMenu };
 #else
-		Widget *w[] = { new WindowsButton, new WindowsMenu };
+			Widget *w[] = { new WindowsButton, new WindowsMenu };
 #endif // LINUX
-		w[0]->draw();
-		w[1]->draw();
-	}
-	void display_window_two()
-	{
+			w[0]->draw();
+			w[1]->draw();
+		}
+		void display_window_two()
+		{
 #ifdef LINUX
-		Widget *w[] = { new LinuxMenu, new LinuxButton };
+			Widget *w[] = { new LinuxMenu, new LinuxButton };
 #else
-		Widget *w[] = { new WindowsMenu, new WindowsButton };
+			Widget *w[] = { new WindowsMenu, new WindowsButton };
 #endif // LINUX
-		w[0]->draw();
-		w[1]->draw();
-	}
-};
+			w[0]->draw();
+			w[1]->draw();
+		}
+	};
 
-void AbstractFactoryBefore()
-{
-	ClientBefore *c = new ClientBefore();
-	c->draw();
-	delete c;
-}
-
-// after ==================================================
-// Abstract factory defines methods to create all related products
-class Factory
-{
-public:
-	virtual Widget *create_button() = 0;
-	virtual Widget *create_menu() = 0;
-};
-
-/**
- * Each concrete factory corresponds to one product
- * family. It creates all possible products of
- * one kind.
- */
-class LinuxFactory : public Factory {
-public:
-	Widget *create_button() {
-		return new LinuxButton;
-	}
-	Widget *create_menu() {
-		return new LinuxMenu;
-	}
-};
-
-/**
- * Concrete factory creates concrete products, but
- * returns them as abstract.
- */
-class WindowsFactory : public Factory {
-public:
-	Widget *create_button() {
-		return new WindowsButton;
-	}
-	Widget *create_menu() {
-		return new WindowsMenu;
-	}
-};
-
-/**
- * Client receives a factory object from its creator.
- *
- * All clients work with factories through abstract
- * interface. They don't know concrete classes of
- * factories. Because of this, you can interchange
- * concrete factories without breaking clients.
- *
- * Clients don't know the concrete classes of created
- * products either, since abstract factory methods
- * returns abstract products.
- */
-class ClientAfter
-{
-private:
-	Factory* factory;
-
-public:
-	ClientAfter(Factory* f)
+	void AbstractFactoryBefore()
 	{
-		factory = f;
+		ClientBefore *c = new ClientBefore();
+		c->draw();
+		delete c;
 	}
 
-	void draw()
+	// after ==================================================
+	// Abstract factory defines methods to create all related products
+	class Factory
 	{
-		Widget* w = factory->create_button();
-		w->draw();
-		display_window_one();
-		display_window_two();
-	}
+	public:
+		virtual Widget *create_button() = 0;
+		virtual Widget *create_menu() = 0;
+	};
 
-	void display_window_one()
+	/**
+	 * Each concrete factory corresponds to one product
+	 * family. It creates all possible products of
+	 * one kind.
+	 */
+	class LinuxFactory : public Factory {
+	public:
+		Widget *create_button() {
+			return new LinuxButton;
+		}
+		Widget *create_menu() {
+			return new LinuxMenu;
+		}
+	};
+
+	/**
+	 * Concrete factory creates concrete products, but
+	 * returns them as abstract.
+	 */
+	class WindowsFactory : public Factory {
+	public:
+		Widget *create_button() {
+			return new WindowsButton;
+		}
+		Widget *create_menu() {
+			return new WindowsMenu;
+		}
+	};
+
+	/**
+	 * Client receives a factory object from its creator.
+	 *
+	 * All clients work with factories through abstract
+	 * interface. They don't know concrete classes of
+	 * factories. Because of this, you can interchange
+	 * concrete factories without breaking clients.
+	 *
+	 * Clients don't know the concrete classes of created
+	 * products either, since abstract factory methods
+	 * returns abstract products.
+	 */
+	class ClientAfter
 	{
-		Widget* w[] = { factory->create_button(), factory->create_menu() };
-		w[0]->draw();
-		w[1]->draw();
-	}
+	private:
+		Factory* factory;
 
-	void display_window_two()
+	public:
+		ClientAfter(Factory* f)
+		{
+			factory = f;
+		}
+
+		void draw()
+		{
+			Widget* w = factory->create_button();
+			w->draw();
+			display_window_one();
+			display_window_two();
+		}
+
+		void display_window_one()
+		{
+			Widget* w[] = { factory->create_button(), factory->create_menu() };
+			w[0]->draw();
+			w[1]->draw();
+		}
+
+		void display_window_two()
+		{
+			Widget* w[] = { factory->create_menu(), factory->create_button() };
+			w[0]->draw();
+			w[1]->draw();
+		}
+	};
+
+	void AbstractFactoryAfter()
 	{
-		Widget* w[] = { factory->create_menu(), factory->create_button() };
-		w[0]->draw();
-		w[1]->draw();
-	}
-};
-
-void AbstractFactoryAfter()
-{
-	Factory* factory;
+		Factory* factory;
 #ifdef LINUX
-	factory = new LinuxFactory;
+		factory = new LinuxFactory;
 #else
-	factory = new WindowsFactory;
+		factory = new WindowsFactory;
 #endif // LINUX
-	ClientAfter* c = new ClientAfter(factory);
-	c->draw();
+		ClientAfter* c = new ClientAfter(factory);
+		c->draw();
+	}
 }

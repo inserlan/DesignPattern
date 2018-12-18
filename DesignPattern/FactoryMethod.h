@@ -17,60 +17,48 @@
 //		有一点需要注意的地方就是复杂对象适合使用工厂模式，而简单对象，特别是只需要通过 new 就可以完成创建的对象，
 //		无需使用工厂模式。如果使用工厂模式，就需要引入一个工厂类，会增加系统的复杂度。
 
-// 抽象父类
-class Shape
+namespace DP_Factory
 {
-public:
-	virtual void Draw() = 0;
-	// 可以在父类中创建static函数作为工厂方法，也可以新开一个工厂类
-	static Shape* MakeShape(std::string shapeType);
-};
-
-// 实体子类1
-class Rectangle : public Shape
-{
-public:
-	void Draw() override
+	// 抽象父类
+	class Shape
 	{
-		std::cout << "Inside Rectangle::Draw() method." << std::endl;
-	}
-};
+	public:
+		virtual void Draw() = 0;
+		// 可以在父类中创建static函数作为工厂方法，也可以新开一个工厂类
+		static Shape* MakeShape(std::string shapeType);
+	};
 
-// 实体子类2
-class Square : public Shape
-{
-public:
-	void Draw() override
+	// 实体子类1
+	class Rectangle : public Shape
 	{
-		std::cout << "Inside Square::Draw() method." << std::endl;
-	}
-};
+	public:
+		void Draw() override
+		{
+			std::cout << "Inside Rectangle::Draw() method." << std::endl;
+		}
+	};
 
-// 实体子类3
-class Circle : public Shape
-{
-public:
-	void Draw() override
+	// 实体子类2
+	class Square : public Shape
 	{
-		std::cout << "Inside Circle::Draw() method." << std::endl;
-	}
-};
+	public:
+		void Draw() override
+		{
+			std::cout << "Inside Square::Draw() method." << std::endl;
+		}
+	};
 
-Shape* Shape::MakeShape(std::string shapeType)
-{
-	if (shapeType == "Rectangle")
-		return new Rectangle();
-	else if (shapeType == "Square")
-		return new Square();
-	else
-		return new Circle();
-}
+	// 实体子类3
+	class Circle : public Shape
+	{
+	public:
+		void Draw() override
+		{
+			std::cout << "Inside Circle::Draw() method." << std::endl;
+		}
+	};
 
-// 创建一个工厂，生成基于给定信息的实体类的对象。
-class ShapeFactory
-{
-public:
-	Shape* MakeShape(std::string shapeType)
+	Shape* Shape::MakeShape(std::string shapeType)
 	{
 		if (shapeType == "Rectangle")
 			return new Rectangle();
@@ -79,27 +67,42 @@ public:
 		else
 			return new Circle();
 	}
-};
 
-void FactoryMethodBefore()
-{
-	Rectangle* shape1 = new Rectangle();
-	shape1->Draw();
-	Square* shape2 = new Square();
-	shape2->Draw();
-	Circle* shape3 = new Circle();
-	shape3->Draw();
-}
+	// 创建一个工厂，生成基于给定信息的实体类的对象。
+	class ShapeFactory
+	{
+	public:
+		Shape* MakeShape(std::string shapeType)
+		{
+			if (shapeType == "Rectangle")
+				return new Rectangle();
+			else if (shapeType == "Square")
+				return new Square();
+			else
+				return new Circle();
+		}
+	};
 
-void FactoryMethodAfter()
-{
-	// 使用工厂，通过传递类型信息来获取实体类的对象。
-	// 不再依赖继承自Shape的子类	
-	Shape* shape1 = Shape::MakeShape("Rectangle");
-	shape1->Draw();
-	ShapeFactory factory;
-	Shape* shape2 = factory.MakeShape("Square");
-	shape2->Draw();
-	Shape* shape3 = factory.MakeShape("Circle");
-	shape3->Draw();
+	void FactoryMethodBefore()
+	{
+		Rectangle* shape1 = new Rectangle();
+		shape1->Draw();
+		Square* shape2 = new Square();
+		shape2->Draw();
+		Circle* shape3 = new Circle();
+		shape3->Draw();
+	}
+
+	void FactoryMethodAfter()
+	{
+		// 使用工厂，通过传递类型信息来获取实体类的对象。
+		// 不再依赖继承自Shape的子类	
+		Shape* shape1 = Shape::MakeShape("Rectangle");
+		shape1->Draw();
+		ShapeFactory factory;
+		Shape* shape2 = factory.MakeShape("Square");
+		shape2->Draw();
+		Shape* shape3 = factory.MakeShape("Circle");
+		shape3->Draw();
+	}
 }

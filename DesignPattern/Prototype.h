@@ -23,136 +23,139 @@
 // 注意事项：与通过对一个类进行实例化来构造新对象不同的是，原型模式是通过拷贝一个现有对象生成新对象的。
 //	浅拷贝实现 Cloneable，重写，深拷贝是通过实现 Serializable 读取二进制流。
 
-enum imageType { LSAT, SPOT	};
-
-class Image
+namespace DP_Prototype
 {
-public:
-	virtual void draw() = 0;
-	static Image *findAndClone(imageType);
-protected:
-	virtual imageType returnType() = 0;
-	virtual Image *clone() = 0;
-	// As each subclass of Image is declared, it registers its prototype
-	static void addPrototype(Image* image)
-	{
-		_prototypes[_nextSlot++] = image;
-	}
-private:
-	// addPrototype() saves each registered prototype here
-	static Image* _prototypes[10];
-	static int _nextSlot;
-};
+	enum imageType { LSAT, SPOT };
 
-Image* Image::_prototypes[];
-int Image::_nextSlot;
+	class Image
+	{
+	public:
+		virtual void draw() = 0;
+		static Image *findAndClone(imageType);
+	protected:
+		virtual imageType returnType() = 0;
+		virtual Image *clone() = 0;
+		// As each subclass of Image is declared, it registers its prototype
+		static void addPrototype(Image* image)
+		{
+			_prototypes[_nextSlot++] = image;
+		}
+	private:
+		// addPrototype() saves each registered prototype here
+		static Image* _prototypes[10];
+		static int _nextSlot;
+	};
 
-// Client calls this public static member function when it needs an instance
-// of an Image subclass
-Image* Image::findAndClone(imageType type)
-{
-	for (int i = 0; i < _nextSlot; i++)
-		if (_prototypes[i]->returnType() == type)
-			return _prototypes[i]->clone();
-	return nullptr;
-}
+	Image* Image::_prototypes[];
+	int Image::_nextSlot;
 
-class LandSatImage : public Image
-{
-public:
-	imageType returnType() { return LSAT; }
-	void draw()
+	// Client calls this public static member function when it needs an instance
+	// of an Image subclass
+	Image* Image::findAndClone(imageType type)
 	{
-		std::cout << "LandSatImage::draw " << _id << std::endl;
-	}
-	// when clone() is called, call the one-argument ctor with a dummy arg
-	Image* clone()
-	{
-		return new LandSatImage(1);
-	}
-protected:
-	// This is only call from clone()
-	LandSatImage(int dummy)
-	{
-		_id = _count++;
-	}
-private:
-	// Mechanism for initializing an Image subclass - this causes the
-	// default ctor to be called, which registers the subclass's prototype
-	static LandSatImage _landSatImage;
-	// This is only called when the private static data member is initiated
-	LandSatImage()
-	{
-		addPrototype(this);
-	}
-	// Nominal "state" per instance mechanism
-	int _id;
-	static int _count;
-};
-
-// Register the subclass's prototype
-LandSatImage LandSatImage::_landSatImage;
-// Initialize the "state" per instance mechanism
-int LandSatImage::_count = 1;
-
-class SpotImage : public Image
-{
-public:
-	imageType returnType()
-	{
-		return SPOT;
-	}
-	void draw()
-	{
-		std::cout << "SpotImage::draw " << _id << std::endl;
-	}
-	Image *clone()
-	{
-		return new SpotImage(1);
-	}
-protected:
-	SpotImage(int dummy)
-	{
-		_id = _count++;
-	}
-private:
-	SpotImage()
-	{
-		addPrototype(this);
-	}
-	static SpotImage _spotImage;
-	int _id;
-	static int _count;
-};
-
-SpotImage SpotImage::_spotImage;
-int SpotImage::_count = 1;
-
-// Simulated stream of creation requests
-const int NUM_IMAGES = 8;
-imageType input[NUM_IMAGES] =
-{
-	LSAT, LSAT, LSAT, SPOT, LSAT, SPOT, SPOT, LSAT
-};
-
-void PrototypeExample()
-{
-	Image* images[NUM_IMAGES];
-	// Given an image type, find the right prototype, and return a clone
-	for (int i = 0; i < NUM_IMAGES; i++)
-	{
-		images[i] = Image::findAndClone(input[i]);
+		for (int i = 0; i < _nextSlot; i++)
+			if (_prototypes[i]->returnType() == type)
+				return _prototypes[i]->clone();
+		return nullptr;
 	}
 
-	// Demonstrate that correct image objects have been cloned
-	for (int i = 0; i < NUM_IMAGES; i++)
+	class LandSatImage : public Image
 	{
-		images[i]->draw();
-	}
+	public:
+		imageType returnType() { return LSAT; }
+		void draw()
+		{
+			std::cout << "LandSatImage::draw " << _id << std::endl;
+		}
+		// when clone() is called, call the one-argument ctor with a dummy arg
+		Image* clone()
+		{
+			return new LandSatImage(1);
+		}
+	protected:
+		// This is only call from clone()
+		LandSatImage(int dummy)
+		{
+			_id = _count++;
+		}
+	private:
+		// Mechanism for initializing an Image subclass - this causes the
+		// default ctor to be called, which registers the subclass's prototype
+		static LandSatImage _landSatImage;
+		// This is only called when the private static data member is initiated
+		LandSatImage()
+		{
+			addPrototype(this);
+		}
+		// Nominal "state" per instance mechanism
+		int _id;
+		static int _count;
+	};
 
-	// Free the dynamic memory
-	for (int i = 0; i < NUM_IMAGES; i++)
+	// Register the subclass's prototype
+	LandSatImage LandSatImage::_landSatImage;
+	// Initialize the "state" per instance mechanism
+	int LandSatImage::_count = 1;
+
+	class SpotImage : public Image
 	{
-		delete images[i];
+	public:
+		imageType returnType()
+		{
+			return SPOT;
+		}
+		void draw()
+		{
+			std::cout << "SpotImage::draw " << _id << std::endl;
+		}
+		Image *clone()
+		{
+			return new SpotImage(1);
+		}
+	protected:
+		SpotImage(int dummy)
+		{
+			_id = _count++;
+		}
+	private:
+		SpotImage()
+		{
+			addPrototype(this);
+		}
+		static SpotImage _spotImage;
+		int _id;
+		static int _count;
+	};
+
+	SpotImage SpotImage::_spotImage;
+	int SpotImage::_count = 1;
+
+	// Simulated stream of creation requests
+	const int NUM_IMAGES = 8;
+	imageType input[NUM_IMAGES] =
+	{
+		LSAT, LSAT, LSAT, SPOT, LSAT, SPOT, SPOT, LSAT
+	};
+
+	void PrototypeExample()
+	{
+		Image* images[NUM_IMAGES];
+		// Given an image type, find the right prototype, and return a clone
+		for (int i = 0; i < NUM_IMAGES; i++)
+		{
+			images[i] = Image::findAndClone(input[i]);
+		}
+
+		// Demonstrate that correct image objects have been cloned
+		for (int i = 0; i < NUM_IMAGES; i++)
+		{
+			images[i]->draw();
+		}
+
+		// Free the dynamic memory
+		for (int i = 0; i < NUM_IMAGES; i++)
+		{
+			delete images[i];
+		}
 	}
 }
