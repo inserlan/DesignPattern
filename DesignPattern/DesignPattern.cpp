@@ -8,6 +8,7 @@
 #include "Singleton.h"
 #include "Builder.h"
 #include "Prototype.h"
+#include "ObjectPool.h"
 
 int main()
 {
@@ -34,5 +35,10 @@ int main()
 	// 原型
 	std::cout << "Design Pattern 5: Prototype =>>" << std::endl;
 	PrototypeExample();
+	std::cout << std::endl;
+
+	// 对象池
+	std::cout << "Design Pattern 6: Object Pool =>>" << std::endl;
+	ObjectPoolExample();
 	std::cout << std::endl;
 }

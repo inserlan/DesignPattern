@@ -154,6 +154,7 @@
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="Builder.h" />
     <ClInclude Include="FactoryMethod.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Prototype.h" />
     <ClInclude Include="Singleton.h" />
