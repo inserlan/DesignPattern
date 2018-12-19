@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="Adapter.h" />
+    <ClInclude Include="Bridge.h" />
     <ClInclude Include="Builder.h" />
     <ClInclude Include="FactoryMethod.h" />
     <ClInclude Include="ObjectPool.h" />

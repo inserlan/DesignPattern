@@ -10,6 +10,7 @@
 #include "Prototype.h"
 #include "ObjectPool.h"
 #include "Adapter.h"
+#include "Bridge.h"
 
 int main()
 {
@@ -47,5 +48,10 @@ int main()
 	std::cout << "Design Pattern 7: Adapter =>>" << std::endl;
 	DP_Adapter1::AdapterExample();
 	DP_Adapter2::AdapterExample();
+	std::cout << std::endl;
+
+	// ге╫с
+	std::cout << "Design Pattern 7: Adapter =>>" << std::endl;
+	DP_Bridge::BridgeExample();
 	std::cout << std::endl;
 }
