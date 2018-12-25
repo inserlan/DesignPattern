@@ -11,6 +11,7 @@
 #include "ObjectPool.h"
 #include "Adapter.h"
 #include "Bridge.h"
+#include "Composite.h"
 
 int main()
 {
@@ -51,7 +52,12 @@ int main()
 	std::cout << std::endl;
 
 	// ÇÅ½Ó
-	std::cout << "Design Pattern 7: Adapter =>>" << std::endl;
+	std::cout << "Design Pattern 8: Adapter =>>" << std::endl;
 	DP_Bridge::BridgeExample();
+	std::cout << std::endl;
+
+	// ×éºÏ
+	std::cout << "Design Pattern 9: Composite =>>" << std::endl;
+	DP_Composite::CompositeExample();
 	std::cout << std::endl;
 }

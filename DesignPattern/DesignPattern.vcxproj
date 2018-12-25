@@ -155,6 +155,7 @@
     <ClInclude Include="Adapter.h" />
     <ClInclude Include="Bridge.h" />
     <ClInclude Include="Builder.h" />
+    <ClInclude Include="Composite.h" />
     <ClInclude Include="FactoryMethod.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
