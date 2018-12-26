@@ -12,6 +12,7 @@
 #include "Adapter.h"
 #include "Bridge.h"
 #include "Composite.h"
+#include "Decorator.h"
 
 int main()
 {
@@ -59,5 +60,11 @@ int main()
 	// 组合
 	std::cout << "Design Pattern 9: Composite =>>" << std::endl;
 	DP_Composite::CompositeExample();
+	std::cout << std::endl;
+
+	// 装饰者
+	std::cout << "Design Pattern 10: Decorator =>>" << std::endl;
+	DP_DecoratorBefore::DecoratorBefore();
+	DP_DecoratorAfter::DecoratorAfter();
 	std::cout << std::endl;
 }
