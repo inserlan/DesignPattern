@@ -13,6 +13,7 @@
 #include "Bridge.h"
 #include "Composite.h"
 #include "Decorator.h"
+#include "Facade.h"
 
 int main()
 {
@@ -66,5 +67,10 @@ int main()
 	std::cout << "Design Pattern 10: Decorator =>>" << std::endl;
 	DP_DecoratorBefore::DecoratorBefore();
 	DP_DecoratorAfter::DecoratorAfter();
+	std::cout << std::endl;
+
+	// Íâ¹Û
+	std::cout << "Design Pattern 11: Facade =>>" << std::endl;
+	DP_Facade::FacadeExample();
 	std::cout << std::endl;
 }
