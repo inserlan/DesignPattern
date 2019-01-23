@@ -14,6 +14,9 @@
 #include "Composite.h"
 #include "Decorator.h"
 #include "Facade.h"
+#include "Flyweight.h"
+#include "Proxy.h"
+#include "ChainOfResponsibility.h"
 
 int main()
 {
@@ -72,5 +75,22 @@ int main()
 	// 外观
 	std::cout << "Design Pattern 11: Facade =>>" << std::endl;
 	DP_Facade::FacadeExample();
+	std::cout << std::endl;
+
+	// 享元
+	std::cout << "Design Pattern 12: Flyweight =>>" << std::endl;
+	DP_FlyweightBefore::FlyweightExampleBefore();
+	DP_FlyweightAfter::FlyweightExampleAfter();
+	std::cout << std::endl;
+
+	// 代理
+	std::cout << "Design Pattern 13: Proxy =>>" << std::endl;
+	DP_ProxyBefore::ProxyExampleBefore();
+	DP_ProxyAfter::ProxyExampleAfter();
+	std::cout << std::endl;
+
+	// 责任链
+	std::cout << "Design Pattern 14: ChainOfResponsibility =>>" << std::endl;
+	DP_ChainOfResponsibility::CORExample();
 	std::cout << std::endl;
 }
