@@ -17,6 +17,8 @@
 #include "Flyweight.h"
 #include "Proxy.h"
 #include "ChainOfResponsibility.h"
+#include "Command.h"
+#include "Interpreter.h"
 
 int main()
 {
@@ -92,5 +94,16 @@ int main()
 	// ÔğÈÎÁ´
 	std::cout << "Design Pattern 14: ChainOfResponsibility =>>" << std::endl;
 	DP_ChainOfResponsibility::CORExample();
+	std::cout << std::endl;
+
+	// ÃüÁî
+	std::cout << "Design Pattern 15: Command =>>" << std::endl;
+	DP_CommandBefore::CommandExampleBefore();
+	DP_CommandAfter::CommandExampleAfter();
+	std::cout << std::endl;
+
+	// ½âÊÍÆ÷
+	std::cout << "Design Pattern 16: Interpreter =>>" << std::endl;
+	DP_Interpreter::InterpreterExample();
 	std::cout << std::endl;
 }
